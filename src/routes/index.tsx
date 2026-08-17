@@ -70,6 +70,20 @@ function Chat() {
     setLoaded(true);
   }, []);
 
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (loaded) {
+      textareaRef.current?.focus();
+    }
+  }, [loaded]);
+
+  useEffect(() => {
+    if (status === "ready") {
+      textareaRef.current?.focus();
+    }
+  }, [status]);
+
   const transport = useMemo(
     () => new DefaultChatTransport({ api: "/api/chat" }),
     []
