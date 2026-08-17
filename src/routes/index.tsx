@@ -10,9 +10,9 @@ const STORAGE_KEY = "ai-chat-messages";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AI Chat" },
+      { title: "LearnPath AI" },
       { name: "description", content: "Chat with an AI assistant" },
-      { property: "og:title", content: "AI Chat" },
+      { property: "og:title", content: "LearnPath AI" },
       { property: "og:description", content: "Chat with an AI assistant" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -31,7 +31,7 @@ function ChatPage() {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <span className="text-sm font-bold">AI</span>
           </div>
-          <h1 className="text-lg font-semibold">AI Chat</h1>
+          <h1 className="text-lg font-semibold">LearnPath AI</h1>
         </div>
         <button
           onClick={() => {
