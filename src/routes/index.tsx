@@ -54,6 +54,7 @@ function ChatPage() {
 function Chat() {
   const [loaded, setLoaded] = useState(false);
   const [initialMessages, setInitialMessages] = useState<UIMessage[]>([]);
+  const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -74,9 +75,9 @@ function Chat() {
     []
   );
 
-  const { messages, input, handleInputChange, handleSubmit, status, error, stop } = useChat({
+  const { messages, sendMessage, status, error, stop } = useChat({
     id: "ai-chat",
-    initialMessages,
+    messages: initialMessages,
     transport,
     onError: (err) => {
       console.error("Chat error:", err);
@@ -103,6 +104,14 @@ function Chat() {
   }
 
   const isLoading = status === "submitted" || status === "streaming";
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const text = input.trim();
+    if (!text || isLoading) return;
+    setInput("");
+    await sendMessage({ text });
+  };
 
   return (
     <>
@@ -169,18 +178,16 @@ function Chat() {
 
       <footer className="border-t border-border bg-background px-4 pb-4 pt-2">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={submit}
           className="mx-auto flex max-w-3xl items-end gap-2 rounded-2xl border border-border bg-muted p-2 focus-within:ring-1 focus-within:ring-ring"
         >
           <textarea
             value={input}
-            onChange={handleInputChange}
+            onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
-                if (input.trim() && !isLoading) {
-                  handleSubmit(e);
-                }
+                void submit(e);
               }
             }}
             placeholder="Ask a question..."
