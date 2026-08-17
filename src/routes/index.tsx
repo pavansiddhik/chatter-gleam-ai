@@ -31,7 +31,7 @@ function ChatPage() {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <span className="text-sm font-bold">AI</span>
           </div>
-          <h1 className="text-lg font-semibold">AI Chat</h1>
+          <h1 className="text-lg font-semibold">LearnPath AI</h1>
         </div>
         <button
           onClick={() => {
