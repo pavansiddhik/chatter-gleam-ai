@@ -192,6 +192,7 @@ function Chat() {
             }}
             placeholder="Ask a question..."
             rows={1}
+            ref={textareaRef}
             className="max-h-40 min-h-[44px] flex-1 resize-none bg-transparent px-3 py-3 text-sm outline-none placeholder:text-muted-foreground"
             style={{ fieldSizing: "content" }}
             autoFocus
