@@ -78,12 +78,6 @@ function Chat() {
     }
   }, [loaded]);
 
-  useEffect(() => {
-    if (status === "ready") {
-      textareaRef.current?.focus();
-    }
-  }, [status]);
-
   const transport = useMemo(
     () => new DefaultChatTransport({ api: "/api/chat" }),
     []
@@ -97,6 +91,12 @@ function Chat() {
       console.error("Chat error:", err);
     },
   });
+
+  useEffect(() => {
+    if (status === "ready") {
+      textareaRef.current?.focus();
+    }
+  }, [status]);
 
   useEffect(() => {
     if (!loaded) return;
