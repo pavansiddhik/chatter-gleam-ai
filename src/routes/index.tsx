@@ -54,8 +54,6 @@ function ChatPage() {
 function Chat() {
   const [loaded, setLoaded] = useState(false);
   const [initialMessages, setInitialMessages] = useState<UIMessage[]>([]);
-  const [input, setInput] = useState("");
-  const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -70,13 +68,25 @@ function Chat() {
     setLoaded(true);
   }, []);
 
+  if (!loaded) {
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+      </div>
+    );
+  }
+
+  return <ChatWindow initialMessages={initialMessages} />;
+}
+
+function ChatWindow({ initialMessages }: { initialMessages: UIMessage[] }) {
+  const [input, setInput] = useState("");
+  const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (loaded) {
-      textareaRef.current?.focus();
-    }
-  }, [loaded]);
+    textareaRef.current?.focus();
+  }, []);
 
   const transport = useMemo(
     () => new DefaultChatTransport({ api: "/api/chat" }),
@@ -99,23 +109,14 @@ function Chat() {
   }, [status]);
 
   useEffect(() => {
-    if (!loaded) return;
     if (typeof window !== "undefined") {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
     }
-  }, [messages, loaded]);
+  }, [messages]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, status]);
-
-  if (!loaded) {
-    return (
-      <div className="flex flex-1 items-center justify-center">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-      </div>
-    );
-  }
 
   const isLoading = status === "submitted" || status === "streaming";
 
