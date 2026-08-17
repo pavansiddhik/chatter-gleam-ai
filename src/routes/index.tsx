@@ -10,9 +10,9 @@ const STORAGE_KEY = "ai-chat-messages";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AI Chat" },
+      { title: "LearnPath AI" },
       { name: "description", content: "Chat with an AI assistant" },
-      { property: "og:title", content: "AI Chat" },
+      { property: "og:title", content: "LearnPath AI" },
       { property: "og:description", content: "Chat with an AI assistant" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
